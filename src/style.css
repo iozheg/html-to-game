@@ -1,0 +1,80 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
+#pixi-container {
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+}
+
+#dom-container {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: 2;
+}
+
+.scene-field {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(40, 1fr);
+  grid-template-rows: repeat(40, 1fr);
+  grid-gap: 1px;
+}
+
+.horizontal-wall {
+  flex-direction: row;
+}
+.horizontal-wall .object {
+  height: 100%;
+  width: 10%;
+}
+.vertical-wall {
+  flex-direction: column;
+}
+.vertical-wall .object {
+  height: 10%;
+  width: 100%;
+}
+.wall {
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+.wall:hover {
+  border: 1px solid limegreen;
+}
+.wall-1 {
+  grid-area: 1 / 5 / 11 / 6;
+  display: flex;
+  justify-content: space-evenly;
+}
+.wall-2 {
+  grid-area: 5 / 1 / 6 / 11;
+  display: flex;
+}
+.wall-3 {
+  grid-area: 7 / 1 / 8 / 11;
+  display: flex;
+  justify-content: flex-end;
+}
+
+
+/* Objects. */
+
+.object {
+  /* height: 10%; */
+  /* width: 10%; */
+  background-color: red;
+  border: 1px solid lightgray;
+  cursor: pointer;
+}
+.object:hover {
+  border: 1px solid limegreen;
+}
