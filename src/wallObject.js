@@ -13,7 +13,7 @@ export default class WallObject extends GameObject {
 
   create2DObject() {
     this.object2d = new PIXI.Graphics();
-    this.object2d.lineStyle(5, 0x00, 1);
+    this.object2d.lineStyle(1, 0x00, 1);
     this.object2d.drawRect(0, 0, this.width, this.height);
     this.object2d.position = this.position;
   }

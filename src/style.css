@@ -29,6 +29,26 @@ html, body {
   grid-gap: 1px;
 }
 
+#world-border-up {
+  grid-area: 1 / 1 / 2 / 40;
+  background-color: gray;
+}
+
+#world-border-right {
+  grid-area: 1 / 40 / 40 / 41;
+  background-color: gray;
+}
+
+#world-border-down {
+  grid-area: 40 / 2 / 41 / 41;
+  background-color: gray;
+}
+
+#world-border-left {
+  grid-area: 2 / 1 / 41 / 2;
+  background-color: gray;
+}
+
 .horizontal-wall {
   flex-direction: row;
 }

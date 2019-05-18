@@ -23,7 +23,9 @@ function startPixi() {
 
   window.pixiApp = new GameEngine(container, dimentions);
 
-  window.pixiApp.addToScene(new Player(20, 20));
+  const player = new Player(20, 20);
+  player.setPosition(40, 40);
+  window.pixiApp.addToScene(player);
 
   window.divs.forEach(div => {
     const size = div.getBoundingClientRect();
