@@ -33,13 +33,14 @@ export default class Player extends GameObject {
   keyDownHandler(event) {
     switch(event.key) {
       case "ArrowUp":
-        if (!this.inJump) {
+        if (GRAVITY_FORCE === 0) this.velocity.y = -MOVE_SPEED;
+        else if (!this.inJump) {
           this.velocity.y = -JUMP_FORCE;
           this.inJump = true;
         }
         break;
       case "ArrowDown":
-        this.velocity.y = MOVE_SPEED;
+        if (GRAVITY_FORCE === 0) this.velocity.y = MOVE_SPEED;
         break;
       case "ArrowLeft":
         this.velocity.x = -MOVE_SPEED;
