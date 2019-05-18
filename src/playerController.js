@@ -3,12 +3,16 @@ import GameObject from "./gameObject";
 import { log } from "./utils";
 
 const MOVE_SPEED = 5;
+const JUMP_FORCE = 5;
+const GRAVITY_FORCE = 0.2;
 
 export default class Player extends GameObject {
   constructor(width, height) {
     super(width, width);
 
     this.hasHitbox = true;
+    this.velocity.y = GRAVITY_FORCE;
+    this.inJump = true;
 
     this.keyboardController();
   }
@@ -29,7 +33,10 @@ export default class Player extends GameObject {
   keyDownHandler(event) {
     switch(event.key) {
       case "ArrowUp":
-        this.velocity.y = -MOVE_SPEED;
+        if (!this.inJump) {
+          this.velocity.y = -JUMP_FORCE;
+          this.inJump = true;
+        }
         break;
       case "ArrowDown":
         this.velocity.y = MOVE_SPEED;
@@ -47,7 +54,7 @@ export default class Player extends GameObject {
     switch(event.key) {
       case "ArrowUp":
       case "ArrowDown":
-        this.velocity.y = 0;
+        if (GRAVITY_FORCE === 0) this.velocity.y = GRAVITY_FORCE;
         break;
       case "ArrowLeft":
       case "ArrowRight":
@@ -63,12 +70,10 @@ export default class Player extends GameObject {
    * @memberof Player
    */
   onCollision({ other, axis}) {
-    /* Set previous position. */
-    this.position.x = this.object2d.position.x;
-    this.position.y = this.object2d.position.y;
-
     /* Find out side of collision for each axis and set object near. */
     if (axis.x > 0) {
+      /* Set previous position. */
+      this.position.x = this.object2d.position.x;
       if (this.position.x > other.position.x + other.width) {
         this.position.x = other.position.x + other.width + 1;
       } else if (this.position.x + this.width < other.position.x) {
@@ -77,10 +82,15 @@ export default class Player extends GameObject {
     }
 
     if (axis.y > 0) {
+      /* Set previous position. */
+      this.position.y = this.object2d.position.y;
       if (this.position.y > other.position.y + other.height) {
         this.position.y = other.position.y + other.height + 1;
       } else if (this.position.y + this.height < other.position.y) {
         this.position.y = other.position.y - this.width - 1;
+        /* Jump is finished if object fell on from the top. */
+        this.inJump = false;
+        this.velocity.y = 0;
       }
     }
   }
@@ -91,6 +101,7 @@ export default class Player extends GameObject {
         this.position.x + this.velocity.x,
         this.position.y + this.velocity.y,
       );
+      this.velocity.y += GRAVITY_FORCE;
     }
   }
 
