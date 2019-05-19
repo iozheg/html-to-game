@@ -3,7 +3,7 @@ import GameObject from "./gameObject";
 import { log } from "./utils";
 
 const MOVE_SPEED = 5;
-const JUMP_FORCE = 5;
+const JUMP_FORCE = 6;
 const GRAVITY_FORCE = 0.2;
 
 export default class Player extends GameObject {
@@ -58,8 +58,10 @@ export default class Player extends GameObject {
         if (GRAVITY_FORCE === 0) this.velocity.y = GRAVITY_FORCE;
         break;
       case "ArrowLeft":
+        if (this.velocity.x < 0) this.velocity.x = 0;
+        break;
       case "ArrowRight":
-        this.velocity.x = 0;
+        if (this.velocity.x > 0) this.velocity.x = 0;
         break;
     }
   }
@@ -72,35 +74,34 @@ export default class Player extends GameObject {
    */
   onCollision({ other, axis}) {
     /* Find out side of collision for each axis and set object near. */
-    if (axis.x > 0) {
-      /* Set previous position. */
-      this.position.x = this.object2d.position.x;
+    if (axis.x !== 0) {
       if (this.position.x > other.position.x + other.width) {
         this.position.x = other.position.x + other.width + 1;
       } else if (this.position.x + this.width < other.position.x) {
         this.position.x = other.position.x - this.width - 1;
       }
+      this.nextPosition.x = this.position.x;
     }
 
-    if (axis.y > 0) {
-      /* Set previous position. */
-      this.position.y = this.object2d.position.y;
+    if (axis.y !== 0) {
       if (this.position.y > other.position.y + other.height) {
         this.position.y = other.position.y + other.height + 1;
+        if (GRAVITY_FORCE !== 0) this.velocity.y = 0.1;
       } else if (this.position.y + this.height < other.position.y) {
         this.position.y = other.position.y - this.width - 1;
         /* Jump is finished if object fell on from the top. */
         this.inJump = false;
-        this.velocity.y = 0;
+        if (GRAVITY_FORCE !== 0) this.velocity.y = 0;
       }
+      this.nextPosition.y = this.position.y;
     }
   }
 
   beforeUpdate(delta) {
     if (this.velocity.x !== 0 || this.velocity.y !==0) {
-      this.preCheckPosition(
+      this.attemptMove(
         this.position.x + this.velocity.x,
-        this.position.y + this.velocity.y,
+        this.position.y + this.velocity.y
       );
       this.velocity.y += GRAVITY_FORCE;
     }
@@ -108,7 +109,7 @@ export default class Player extends GameObject {
 
   update(delta) {
     if (this.velocity.x !== 0 || this.velocity.y !==0) {
-      this.setPosition(this.position.x, this.position.y);
+      this.setPosition(this.nextPosition.x, this.nextPosition.y);
     }
   }
 }
