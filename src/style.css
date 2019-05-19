@@ -76,11 +76,21 @@ html, body {
   justify-content: space-evenly;
 }
 .wall-2 {
-  grid-area: 5 / 1 / 6 / 11;
+  grid-area: 5 / 2 / 6 / 4;
   display: flex;
 }
 .wall-3 {
-  grid-area: 7 / 1 / 8 / 11;
+  grid-area: 7 / 7 / 8 / 11;
+  display: flex;
+  justify-content: flex-end;
+}
+.wall-4 {
+  grid-area: 12 / 2 / 13 / 20;
+  display: flex;
+  justify-content: flex-end;
+}
+.wall-5 {
+  grid-area: 9 / 13 / 10 / 16;
   display: flex;
   justify-content: flex-end;
 }
