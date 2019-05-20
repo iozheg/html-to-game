@@ -108,3 +108,10 @@ html, body {
 .object:hover {
   border: 1px solid limegreen;
 }
+.object.collectable {
+  background-color: blue;
+}
+
+.object-1 {
+  grid-area: 8 / 10 / 9 / 11;
+}

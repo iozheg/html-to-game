@@ -97,6 +97,16 @@ export default class Player extends GameObject {
     }
   }
 
+  /**
+   * @param {GameObject} other
+   * @memberof Player
+   */
+  onTrigger(other) {
+    if (other.isCollectable) {
+      log("Collected:", other.uuid);
+    }
+  }
+
   beforeUpdate(delta) {
     if (this.velocity.x !== 0 || this.velocity.y !==0) {
       this.attemptMove(

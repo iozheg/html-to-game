@@ -3,6 +3,7 @@ import "./style.css";
 import GameEngine from "./gameEngine";
 import Player from "./playerController";
 import WallObject from "./wallObject";
+import CollectableObject from "./collectableObject";
 
 window.pixiApp;
 window.divs;
@@ -33,11 +34,19 @@ function startPixi() {
     wall.setPosition(size.x, size.y);
     window.pixiApp.addToScene(wall);
   });
+
+  window.collectable.forEach(div => {
+    const size = div.getBoundingClientRect();
+    const wall = new CollectableObject(size.width, size.height);
+    wall.setPosition(size.x, size.y);
+    window.pixiApp.addToScene(wall);
+  });
 }
 
 
 function initDomElements() {
   window.divs = getAllElements("[data-scene-object]");
+  window.collectable = getAllElements("[data-scene-collectable]");
 
   startPixi();
 }
