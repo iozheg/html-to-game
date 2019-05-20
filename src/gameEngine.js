@@ -63,66 +63,66 @@ export default class GameEngine {
 
     for (const source of sources) {
       for (const target of targets) {
+        /* Skip source itself. */
         if (source.uuid === target.uuid) continue;
-        const collision = this.checkCollisionsByAxis(source, target);
-        if (collision) {
-          source.checkForCollisions = false;
-          source.onCollision({ other: target, axis: collision });
-        }
+        this.checkCollision(source, target);
       }
     }
   }
 
   /**
-   *
-   *
    * @param {GameObject} source
    * @param {GameObject} target
    * @returns {import("./typedef").Collision}
    * @memberof GameEngine
    */
-  // checkIntersection(source, target) {
-  //   const left = Math.max(source.position.x, target.position.x);
-  //   const top = Math.max(source.position.y, target.position.y);
-  //   const right = Math.min(
-  //     source.position.x + source.width,
-  //     target.position.x + target.width
-  //   );
-  //   const bottom = Math.min(
-  //     source.position.y + source.height,
-  //     target.position.y + target.height
-  //   );
+  checkCollision(source, target) {
+    let collision;
+    if (target.isTrigger) {
+      collision = this.checkCollisionBasic(source, target);
+      if (collision) {
+        source.onTrigger(target);
+        target.onTrigger(source);
+      }
+    } else {
+      collision = this.checkCollisionsByAxis(source, target);
+      if (collision) {
+        source.onCollision({ other: target, axis: collision });
+        target.onCollision({ other: source, axis: collision });
+      }
+    }
 
-  //   const width = right - left;
-  //   const height = bottom - top;
-
-  //   if (!((width < 0) || (height < 0))) {
-  //     /* Get axis of impact. */
-  //     const containsAnyCorner = source.containsAny([
-  //       target.position,
-  //       {
-  //         x: target.position.x,
-  //         y: target.position.y + target.height
-  //       },
-  //       {
-  //         x: target.position.x + target.width,
-  //         y: target.position.y + target.height
-  //       },
-  //       {
-  //         x: target.position.x + target.width,
-  //         y: target.position.y
-  //       }
-  //     ]);
-  //     if (containsAnyCorner) return { x: 1, y: 1 };
-  //     if (width > height) return { x: 0, y: 1};
-  //     else return { x: 1, y: 0 };
-  //   }
-  //   return undefined;
-  // }
+    if (collision) source.checkForCollisions = false;
+  }
 
   /**
-   *
-   *
+   * @param {GameObject} source
+   * @param {GameObject} target
+   * @returns {import("./typedef").Collision}
+   * @memberof GameEngine
+   */
+  checkCollisionBasic(source, target) {
+    const sourceRect = {
+      left: source.nextPosition.x,
+      top: source.nextPosition.y,
+      right: source.nextPosition.x + source.width,
+      bottom: source.nextPosition.y + source.height
+    }
+    const targetRect = {
+      left: target.position.x,
+      top: target.position.y,
+      right: target.position.x + target.width,
+      bottom: target.position.y + target.height
+    }
+
+    if (this.checkRectIntersection(sourceRect, targetRect)) {
+      return true;
+    }
+
+    return false;
+  }
+
+  /**
    * @param {GameObject} source
    * @param {GameObject} target
    * @returns {import("./typedef").Collision}

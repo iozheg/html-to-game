@@ -41,6 +41,15 @@ export default class GameObject {
    */
   onCollision(collision) {}
 
+  /**
+   * @param {GameObject} other
+   * @memberof GameObject
+   */
+  onTrigger(other) {}
+
+  destroy() {
+    this.object2d.destroy();
+  }
   // contains(point) {
   //   const right = this.position.x + this.width;
   //   const bottom = this.position.y + this.height;
