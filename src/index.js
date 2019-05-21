@@ -30,14 +30,14 @@ function startPixi() {
 
   window.divs.forEach(div => {
     const size = div.getBoundingClientRect();
-    const wall = new WallObject(size.width, size.height);
+    const wall = new WallObject(size.width, size.height, div);
     wall.setPosition(size.x, size.y);
     window.pixiApp.addToScene(wall);
   });
 
   window.collectable.forEach(div => {
     const size = div.getBoundingClientRect();
-    const wall = new CollectableObject(size.width, size.height);
+    const wall = new CollectableObject(size.width, size.height, div);
     wall.setPosition(size.x, size.y);
     window.pixiApp.addToScene(wall);
   });

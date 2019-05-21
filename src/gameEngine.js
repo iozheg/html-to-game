@@ -35,6 +35,7 @@ export default class GameEngine {
    */
   addToScene(gameObject) {
     this.gameObjects.push(gameObject);
+    gameObject.engine = this;
     this.gameObjectsContainer.addChild(gameObject.object2d);
   }
 

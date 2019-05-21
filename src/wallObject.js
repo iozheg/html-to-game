@@ -2,8 +2,8 @@ import * as PIXI from "pixi.js";
 import GameObject from "./gameObject";
 
 export default class WallObject extends GameObject {
-  constructor(width, height) {
-    super(width, height);
+  constructor(width, height, sourceHTMLElement) {
+    super(width, height, sourceHTMLElement);
 
     this.position = { x: 100, y: 100 };
     this.hasHitbox = true;

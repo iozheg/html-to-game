@@ -2,7 +2,9 @@ import * as PIXI from "pixi.js";
 import { uuid } from "./utils";
 
 export default class GameObject {
-  constructor(width = 10, height = 10) {
+  constructor(width = 10, height = 10, sourceHTMLElement) {
+    this.sourceHTMLElement = sourceHTMLElement;
+    this.engine;
     /** @type {String} */
     this.uuid = uuid();
     this.width = width;
@@ -49,6 +51,10 @@ export default class GameObject {
 
   destroy() {
     this.object2d.destroy();
+    this.engine.removeFromScene(this);
+    if (this.sourceHTMLElement) {
+      this.sourceHTMLElement.parentNode.removeChild(this.sourceHTMLElement);
+    }
   }
   // contains(point) {
   //   const right = this.position.x + this.width;
