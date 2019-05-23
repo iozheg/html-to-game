@@ -22,31 +22,41 @@ html, body {
 
 .scene-field {
   height: 100%;
-  width: 100%;
+  width: 100vh;
   display: grid;
-  grid-template-columns: repeat(40, 1fr);
+  margin-left: auto;
+  margin-right: auto;
+  --width-cells: 40;
+  grid-template-columns: repeat(var(--width-cells), calc(100vh/40));
+  /* grid-auto-columns: calc(100vh/40); */
   grid-template-rows: repeat(40, 1fr);
-  grid-gap: 1px;
+  /* grid-gap: 1px; */
+}
+
+#player {
+  grid-area: 2 / 2 / 3 / 3;
+  width: 20px;
+  height: 20px;
 }
 
 #world-border-up {
-  grid-area: 1 / 1 / 2 / 40;
-  background-color: gray;
+  grid-area: 1 / 1 / 2 / calc(var(--width-cells) + 1);
+  /* background-color: gray; */
 }
 
 #world-border-right {
-  grid-area: 1 / 40 / 40 / 41;
-  background-color: gray;
+  grid-area: 2 / var(--width-cells) / 40 / calc(var(--width-cells) + 1);
+  /* background-color: gray; */
 }
 
 #world-border-down {
-  grid-area: 40 / 2 / 41 / 41;
-  background-color: gray;
+  grid-area: 40 / 1 / 41 / calc(var(--width-cells) + 1);
+  /* background-color: gray; */
 }
 
 #world-border-left {
-  grid-area: 2 / 1 / 41 / 2;
-  background-color: gray;
+  grid-area: 2 / 1 / 40 / 2;
+  /* background-color: gray; */
 }
 
 .horizontal-wall {
@@ -71,12 +81,12 @@ html, body {
   border: 1px solid limegreen;
 }
 .wall-1 {
-  grid-area: 1 / 5 / 11 / 6;
+  grid-area: 2 / 5 / 11 / 6;
   display: flex;
   justify-content: space-evenly;
 }
 .wall-2 {
-  grid-area: 5 / 2 / 6 / 4;
+  grid-area: 5 / 2 / 6 / 3;
   display: flex;
 }
 .wall-3 {
@@ -101,15 +111,15 @@ html, body {
 .object {
   /* height: 10%; */
   /* width: 10%; */
-  background-color: red;
-  border: 1px solid lightgray;
+  /* background-color: red; */
+  /* border: 1px solid lightgray; */
   cursor: pointer;
 }
 .object:hover {
   border: 1px solid limegreen;
 }
 .object.collectable {
-  background-color: blue;
+  /* background-color: blue; */
 }
 
 .object-1 {

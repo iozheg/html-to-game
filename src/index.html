@@ -7,26 +7,65 @@
   <body>
     <div id="dom-container">
       <div class="scene-field">
-        <div id="world-border-up" data-scene-object></div>
-        <div id="world-border-right" data-scene-object></div>
-        <div id="world-border-down" data-scene-object></div>
-        <div id="world-border-left" data-scene-object></div>
+        <div id="world-border-up"
+          data-scene-object
+          data-texture-name="images/tileset.png"
+          data-texture-frame="272,176,16,16"
+        >
+        </div>
+          <div id="world-border-right"
+          data-scene-object
+          data-texture-name="images/tileset.png"
+          data-texture-frame="240,144,16,16"
+        >
+        </div>
+        <div id="world-border-down"
+          data-scene-object
+          data-texture-name="images/tileset.png"
+          data-texture-frame="272,112,16,16"
+        >
+        </div>
+        <div id="world-border-left"
+          data-scene-object
+          data-texture-name="images/tileset.png"
+          data-texture-frame="304,144,16,16"
+        >
+        </div>
 
-        <div class="wall wall-1 vertical-wall" data-scene-object>
+        <div id="player" data-scene-player></div>
+
+        <div class="wall wall-1 vertical-wall"
+          data-scene-object
+          data-texture-name="images/tileset.png"
+          data-texture-frame="16,48,16,16"
+        >
         </div>
-        <div class="wall wall-2 horizontal-wall" data-scene-object>
-          <!-- <div class="object" data-scene-object="object-one"></div>
-          <div class="object" data-scene-object="object-two"></div>
-          <div class="object" data-scene-object="object-two"></div> -->
+        <div class="wall wall-2 horizontal-wall"
+          data-scene-object
+          data-texture-name="images/tileset.png"
+          data-texture-frame="48,16,16,16"
+        >
         </div>
-        <div class="wall wall-3 horizontal-wall" data-scene-object>
-          <!-- <div class="object" data-scene-object="object-one"></div>
-          <div class="object" data-scene-object="object-two"></div>
-          <div class="object" data-scene-object="object-two"></div> -->
+        <div class="wall wall-3 horizontal-wall"
+          data-scene-object
+          data-texture-name="images/tileset.png"
+          data-texture-frame="48,16,16,16"
+        >
         </div>
-        <div class="wall wall-4 horizontal-wall" data-scene-object></div>
-        <div class="wall wall-5 horizontal-wall" data-scene-object></div>
-        <div class="object collectable object-1" data-scene-collectable></div>
+        <div class="wall wall-4 horizontal-wall"
+          data-scene-object
+          data-texture-name="images/tileset.png"
+          data-texture-frame="48,16,16,16"
+        ></div>
+        <div class="wall wall-5 horizontal-wall"
+          data-scene-object
+          data-texture-name="images/tileset.png"
+          data-texture-frame="48,16,16,16"
+        ></div>
+        <div class="object collectable object-1"
+          data-scene-collectable
+          data-texture-name="images/vue.png"
+        ></div>
       </div>
     </div>
     <div id="pixi-container"></div>
