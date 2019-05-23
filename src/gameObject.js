@@ -15,8 +15,6 @@ export default class GameObject {
     this.hasHitbox = false;
     this.checkForCollisions = false;
     this.object2d;
-
-    this.create2DObject();
   }
 
   create2DObject() {

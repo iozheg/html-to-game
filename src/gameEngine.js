@@ -13,6 +13,7 @@ export default class GameEngine {
     /** @type {GameObject[]} */
     this.gameObjects = [];
     this.gameObjectsContainer = new PIXI.Container();
+    this.resources = [];
 
     this.app = new PIXI.Application({
       width: sceneSize.width,
@@ -20,7 +21,7 @@ export default class GameEngine {
       autoResize: true,
       antialias: true,
       forceFXAA: true,
-      transparent: true,
+      backgroundColor: 0x693f55,
     });
     parentDOMElement.appendChild(this.app.view);
     console.log(this.app);
@@ -56,6 +57,26 @@ export default class GameEngine {
     this.gameObjects.forEach(go => go.beforeUpdate(delta));
     this.detectCollisions();
     this.gameObjects.forEach(go => go.update(delta));
+  }
+
+  loadTextures(textures, callback) {
+    PIXI.Loader.shared
+      .add(textures)
+      .load((loader, resources) => {
+        this.resources = resources;
+        callback();
+      });
+  }
+
+  getTexture(texture) {
+    const resource = this.resources[texture.name].texture.baseTexture;
+    if (texture.frame) {
+      const frame = new PIXI.Rectangle(
+        ...texture.frame.split(",").map(v => Number(v))
+      );
+      return new PIXI.Texture(resource, frame);
+    }
+    return new PIXI.Texture(resource);
   }
 
   detectCollisions() {

@@ -2,9 +2,10 @@ import * as PIXI from "pixi.js";
 import GameObject from "./gameObject";
 
 export default class WallObject extends GameObject {
-  constructor(width, height, sourceHTMLElement) {
+  constructor(width, height, texture, sourceHTMLElement) {
     super(width, height, sourceHTMLElement);
 
+    this.texture = texture;
     this.position = { x: 100, y: 100 };
     this.hasHitbox = true;
 
@@ -12,9 +13,23 @@ export default class WallObject extends GameObject {
   }
 
   create2DObject() {
-    this.object2d = new PIXI.Graphics();
-    this.object2d.lineStyle(1, 0x00, 1);
-    this.object2d.drawRect(0, 0, this.width, this.height);
+    if (this.texture) {
+      this.object2d = new PIXI.TilingSprite(
+        this.texture,
+        this.width,
+        this.height
+      );
+
+      let scale = this.height > this.width
+        ? this.width / this.texture.width
+        : this.height / this.texture.height;
+      scale = Math.ceil(scale * 10) / 10;
+      this.object2d.tileScale = { x: scale, y: scale };
+    } else {
+      this.object2d = new PIXI.Graphics();
+      this.object2d.lineStyle(1, 0x00, 1);
+      this.object2d.drawRect(0, 0, this.width, this.height);
+    }
     this.object2d.position = this.position;
   }
 }

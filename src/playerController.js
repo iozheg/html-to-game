@@ -7,21 +7,29 @@ const JUMP_FORCE = 6;
 const GRAVITY_FORCE = 0.2;
 
 export default class Player extends GameObject {
-  constructor(width, height) {
+  constructor(width, height, texture) {
     super(width, width);
 
+    this.texture = texture;
     this.hasHitbox = true;
     this.velocity.y = GRAVITY_FORCE;
     this.inJump = true;
 
+    this.create2DObject();
     this.keyboardController();
   }
 
   create2DObject() {
-    this.object2d = new PIXI.Graphics();
+    if (this.texture) {
+      this.object2d = new PIXI.Sprite(this.texture);
+      this.object2d.width = this.width;
+      this.object2d.height = this.height;
+    } else {
+      this.object2d = new PIXI.Graphics();
+      this.object2d.lineStyle(3, 0x00, 1);
+      this.object2d.drawRect(0, 0, this.width, this.height);
+    }
     this.object2d.name = "player";
-    this.object2d.lineStyle(3, 0x00, 1);
-    this.object2d.drawRect(0, 0, this.width, this.height);
     this.object2d.position = this.position;
   }
 
