@@ -136,6 +136,6 @@ html, body {
 }
 
 .rotate-z {
-  animation: rotate-by-z 0.5s linear infinite alternate;
+  animation: rotate-by-z 0.5s linear 1s infinite alternate;
   transform-origin: center;
 }

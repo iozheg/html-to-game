@@ -35,8 +35,10 @@ export default class TriggerObject extends GameObject {
   }
 
   update(delta) {
-    const bounds = this.sourceHTMLElement.getBoundingClientRect();
-    this.setSize(bounds.width, bounds.height);
-    this.setPosition(bounds.x, bounds.y);
+    if (this.options.animate) {
+      const bounds = this.sourceHTMLElement.getBoundingClientRect();
+      this.setSize(bounds.width, bounds.height);
+      this.setPosition(bounds.x, bounds.y);
+    }
   }
 }
