@@ -24,7 +24,6 @@ export default class CollectableObject extends GameObject {
       this.object2d.lineStyle(1, 0x00, 1);
       this.object2d.drawRect(0, 0, this.width, this.height);
     }
-    this.object2d.position = this.position;
   }
 
   /**
@@ -33,5 +32,11 @@ export default class CollectableObject extends GameObject {
    */
   onTrigger(other) {
     this.destroy();
+  }
+
+  update(delta) {
+    const { width, height, x, y } = this.sourceHTMLElement.getBoundingClientRect();
+    this.setSize(width, height);
+    this.setPosition(x, y);
   }
 }
