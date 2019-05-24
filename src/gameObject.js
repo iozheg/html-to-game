@@ -2,7 +2,7 @@ import * as PIXI from "pixi.js";
 import { uuid } from "./utils";
 
 export default class GameObject {
-  constructor(width = 10, height = 10, sourceHTMLElement) {
+  constructor(width = 10, height = 10, sourceHTMLElement, options) {
     this.sourceHTMLElement = sourceHTMLElement;
     this.engine;
     /** @type {String} */
@@ -10,6 +10,7 @@ export default class GameObject {
     this.width = width;
     this.height = height;
     this.position = { x: 0, y: 0 };
+    this.options = options || {};
     this.nextPosition = { x: 0, y: 0 };
     this.velocity = { x: 0, y: 0 };
     this.hasHitbox = false;

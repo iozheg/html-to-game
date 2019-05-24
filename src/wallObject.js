@@ -2,8 +2,8 @@ import * as PIXI from "pixi.js";
 import GameObject from "./gameObject";
 
 export default class WallObject extends GameObject {
-  constructor(width, height, texture, sourceHTMLElement) {
-    super(width, height, sourceHTMLElement);
+  constructor(width, height, texture, sourceHTMLElement, options) {
+    super(width, height, sourceHTMLElement, options);
 
     this.texture = texture;
     this.position = { x: 100, y: 100 };

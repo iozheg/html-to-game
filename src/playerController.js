@@ -7,8 +7,8 @@ const JUMP_FORCE = 6;
 const GRAVITY_FORCE = 0.2;
 
 export default class Player extends GameObject {
-  constructor(width, height, texture) {
-    super(width, width);
+  constructor(width, height, texture, sourceHTMLElement, options) {
+    super(width, width, sourceHTMLElement, options);
 
     this.texture = texture;
     this.hasHitbox = true;
