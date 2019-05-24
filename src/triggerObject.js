@@ -1,7 +1,7 @@
 import * as PIXI from "pixi.js";
 import GameObject from "./gameObject";
 
-export default class CollectableObject extends GameObject {
+export default class TriggerObject extends GameObject {
   constructor(width, height, texture, sourceHTMLElement) {
     super(width, height, sourceHTMLElement);
 
@@ -28,15 +28,15 @@ export default class CollectableObject extends GameObject {
 
   /**
    * @param {GameObject} other
-   * @memberof CollectableObject
+   * @memberof TriggerObject
    */
   onTrigger(other) {
     this.destroy();
   }
 
   update(delta) {
-    const { width, height, x, y } = this.sourceHTMLElement.getBoundingClientRect();
-    this.setSize(width, height);
-    this.setPosition(x, y);
+    const bounds = this.sourceHTMLElement.getBoundingClientRect();
+    this.setSize(bounds.width, bounds.height);
+    this.setPosition(bounds.x, bounds.y);
   }
 }

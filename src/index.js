@@ -5,7 +5,7 @@ import "./images/vue.png";
 import GameEngine from "./gameEngine";
 import Player from "./playerController";
 import WallObject from "./wallObject";
-import CollectableObject from "./collectableObject";
+import TriggerObject from "./triggerObject";
 
 window.pixiApp;
 window.divs;
@@ -52,7 +52,7 @@ function initScene() {
     setDivTitle(div);
     const size = div.getBoundingClientRect();
     const texture = getTextureData(div);
-    const wall = new CollectableObject(
+    const wall = new TriggerObject(
       size.width, size.height,  pixiApp.getTexture(texture), div
     );
     wall.setPosition(size.x, size.y);
