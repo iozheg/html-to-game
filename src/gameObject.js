@@ -32,8 +32,18 @@ export default class GameObject {
   }
 
   setPosition(x, y) {
-    this.position = { x, y };
-    this.object2d.position = { x, y };
+    this.position = {
+      x: isFinite(x) ? x : this.position.x,
+      y: isFinite(y) ? y : this.position.y
+    };
+    this.object2d.position = { ...this.position };
+  }
+
+  setSize(width, height) {
+    this.width = isFinite(width) ? width : this.width;
+    this.height = isFinite(height) ? height : this.height;
+    this.object2d.width = this.width;
+    this.object2d.height = this.height;
   }
 
   /** 
@@ -48,7 +58,7 @@ export default class GameObject {
   onTrigger(other) {}
 
   destroy() {
-    this.object2d.destroy();
+    this.object2d.destroy(true);
     this.engine.removeFromScene(this);
     if (this.sourceHTMLElement) {
       this.sourceHTMLElement.parentNode.removeChild(this.sourceHTMLElement);
