@@ -8,8 +8,6 @@ import WallObject from "./wallObject";
 import TriggerObject from "./triggerObject";
 
 window.pixiApp;
-window.divs;
-
 function getData(div, dataName) {
   return div.dataset[dataName];
 }
@@ -21,6 +19,19 @@ function getTextureData(div) {
   };
 }
 
+function getOptions(div) {
+  const optionsStr = getData(div, "options") || "{}";
+  try {
+    return JSON.parse(optionsStr);
+  } catch (e) {
+    console.warn(
+      `ElementID: "${div.id}" Classes: "${div.classList}"`,
+      `[data-options] is not valid JSON string: ${optionsStr}`
+    );
+    return {};
+  }
+}
+
 function setDivTitle(div) {
   div.title = div.id + " " + Array(...div.classList).join(" ");
 }
@@ -30,30 +41,45 @@ function getAllElements(selector) {
     // .filter(node => node.nodeName.toLowerCase() === "div");
 }
 
-function initScene() {
+function createPlayer() {
   const playerDiv = getAllElements("[data-scene-player]")[0];
   const playerSize = playerDiv.getBoundingClientRect();
-  const player = new Player(playerSize.width, playerSize.height);
+  const playerOptions = getOptions(playerDiv);
+  const player = new Player(
+    playerSize.width,
+    playerSize.height,
+    undefined,
+    playerDiv,
+    playerOptions
+  );
   player.setPosition(playerSize.x, playerSize.y);
   window.pixiApp.addToScene(player);
+}
 
-  window.divs.forEach(div => {
+function initScene() {
+  createPlayer();
+
+  const walls = getAllElements("[data-scene-object]");
+  walls.forEach(div => {
     setDivTitle(div);
     const size = div.getBoundingClientRect();
     const texture = getTextureData(div);
+    const options = getOptions(div);
     const wall = new WallObject(
-      size.width, size.height, pixiApp.getTexture(texture), div
+      size.width, size.height, pixiApp.getTexture(texture), div, options
     );
     wall.setPosition(size.x, size.y);
     window.pixiApp.addToScene(wall);
   });
 
-  window.collectable.forEach(div => {
+  const triggers = getAllElements("[data-scene-trigger]");
+  triggers.forEach(div => {
     setDivTitle(div);
     const size = div.getBoundingClientRect();
     const texture = getTextureData(div);
+    const options = getOptions(div);
     const wall = new TriggerObject(
-      size.width, size.height,  pixiApp.getTexture(texture), div
+      size.width, size.height, pixiApp.getTexture(texture), div, options
     );
     wall.setPosition(size.x, size.y);
     window.pixiApp.addToScene(wall);
@@ -77,9 +103,6 @@ function startPixi() {
 
 
 function initDomElements() {
-  window.divs = getAllElements("[data-scene-object]");
-  window.collectable = getAllElements("[data-scene-collectable]");
-
   startPixi();
 }
 

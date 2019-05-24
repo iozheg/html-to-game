@@ -32,7 +32,10 @@
         >
         </div>
 
-        <div id="player" data-scene-player></div>
+        <div id="player"
+          data-scene-player
+          data-options = '{ "hasHitbox": true }'
+        ></div>
 
         <div class="wall wall-1 vertical-wall"
           data-scene-object
@@ -63,8 +66,9 @@
           data-texture-frame="48,16,16,16"
         ></div>
         <div class="object collectable object-1 rotate-z"
-          data-scene-collectable
+          data-scene-trigger
           data-texture-name="images/vue.png"
+          data-options='{ "collectable": true }'
         ></div>
       </div>
     </div>
