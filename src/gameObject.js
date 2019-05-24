@@ -13,7 +13,6 @@ export default class GameObject {
     this.options = options || {};
     this.nextPosition = { x: 0, y: 0 };
     this.velocity = { x: 0, y: 0 };
-    this.hasHitbox = false;
     this.checkForCollisions = false;
     this.object2d;
   }
@@ -27,7 +26,7 @@ export default class GameObject {
 
   attemptMove(x, y) {
     this.nextPosition = { x, y };
-    if (this.hasHitbox) {
+    if (this.options.hasHitbox) {
       this.checkForCollisions = true;
     }
   }

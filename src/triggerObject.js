@@ -7,9 +7,9 @@ export default class TriggerObject extends GameObject {
 
     this.texture = texture;
     this.position = { x: 100, y: 100 };
-    this.hasHitbox = true;
-    this.isTrigger = true;
-    this.isCollectable = true;
+
+    this.options.hasHitbox = true;
+    this.options.isTrigger = true;
 
     this.create2DObject();
   }
@@ -31,7 +31,7 @@ export default class TriggerObject extends GameObject {
    * @memberof TriggerObject
    */
   onTrigger(other) {
-    this.destroy();
+    if (this.options.collectable) this.destroy();
   }
 
   update(delta) {

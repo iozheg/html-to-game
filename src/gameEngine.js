@@ -81,7 +81,7 @@ export default class GameEngine {
 
   detectCollisions() {
     const sources = this.gameObjects.filter(go => go.checkForCollisions);
-    const targets = this.gameObjects.filter(go => go.hasHitbox);
+    const targets = this.gameObjects.filter(go => go.options.hasHitbox);
 
     for (const source of sources) {
       for (const target of targets) {
@@ -100,7 +100,7 @@ export default class GameEngine {
    */
   checkCollision(source, target) {
     let collision;
-    if (target.isTrigger) {
+    if (target.options.isTrigger) {
       collision = this.checkCollisionBasic(source, target);
       if (collision) {
         source.onTrigger(target);

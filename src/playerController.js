@@ -11,9 +11,10 @@ export default class Player extends GameObject {
     super(width, width, sourceHTMLElement, options);
 
     this.texture = texture;
-    this.hasHitbox = true;
     this.velocity.y = GRAVITY_FORCE;
     this.inJump = true;
+
+    this.options.hasHitbox = true;
 
     this.create2DObject();
     this.keyboardController();
@@ -110,7 +111,7 @@ export default class Player extends GameObject {
    * @memberof Player
    */
   onTrigger(other) {
-    if (other.isCollectable) {
+    if (other.options.collectable) {
       log("Collected:", other.uuid);
     }
   }
