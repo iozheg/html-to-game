@@ -1,6 +1,7 @@
 
 import "./style.css";
 import "./images/tileset.png";
+import "./images/props.png";
 import "./images/vue.png";
 import GameEngine from "./gameEngine";
 import Player from "./playerController";

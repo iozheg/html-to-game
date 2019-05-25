@@ -65,6 +65,24 @@
           data-texture-name="images/tileset.png"
           data-texture-frame="48,16,16,16"
         ></div>
+
+        <div id="container-moving-block">
+          <div id="moving-block"
+            class="move-up-down-repeat"
+            data-scene-trigger
+            data-texture-name="images/tileset.png"
+            data-texture-frame="272,288,16,16"
+            data-options='{ "isHazard": true, "tiles": true, "animate": true }'
+          ></div>
+        </div>
+
+        <div class="hazard"
+          data-scene-trigger
+          data-texture-name="images/props.png"
+          data-texture-frame="144,199,15,9"
+          data-options='{ "isHazard": true, "tiles": true }'
+        ></div>
+
         <div class="object collectable object-1 rotate-z"
           data-scene-trigger
           data-texture-name="images/vue.png"

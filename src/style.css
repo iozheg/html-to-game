@@ -81,7 +81,7 @@ html, body {
   border: 1px solid limegreen;
 }
 .wall-1 {
-  grid-area: 2 / 5 / 11 / 6;
+  grid-area: 2 / 5 / 6 / 6;
   display: flex;
   justify-content: space-evenly;
 }
@@ -105,6 +105,16 @@ html, body {
   justify-content: flex-end;
 }
 
+#container-moving-block {
+  grid-area: 6 / 5 / 11 / 6;
+  display: flex;
+  justify-content: flex-end;
+}
+#moving-block {
+  width: 100%;
+  height: 20%;
+}
+
 
 /* Objects. */
 
@@ -126,6 +136,19 @@ html, body {
   grid-area: 4 / 8 / 5 / 9;
 }
 
+
+.hazard {
+  grid-area: 11 / 10 / 12 / 13;
+  align-self: flex-end;
+  height: 50%;
+}
+
+/* Animations. */
+
+:root {
+  --start-delay: 1s;
+}
+
 @keyframes rotate-by-z {
   from {
     transform: scaleX(1);
@@ -134,8 +157,15 @@ html, body {
     transform: scaleX(0);
   }
 }
-
 .rotate-z {
-  animation: rotate-by-z 0.5s linear 1s infinite alternate;
+  animation: rotate-by-z 0.5s linear var(--start-delay) infinite alternate;
   transform-origin: center;
+}
+
+@keyframes up-down-repeat {
+  from { margin-top: 0% }
+  to { margin-top: 500% }
+}
+.move-up-down-repeat {
+  animation: up-down-repeat 0.5s linear var(--start-delay) infinite alternate;
 }

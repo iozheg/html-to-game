@@ -113,6 +113,12 @@ export default class Player extends GameObject {
     if (other.options.collectable) {
       log("Collected:", other.uuid);
     }
+    if (other.options.isHazard) {
+      log("Player died");
+      this.removeController();
+      this.velocity = { x: 0, y: 0 };
+      this.destroy();
+    }
   }
 
   beforeUpdate(delta) {
