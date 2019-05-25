@@ -21,6 +21,35 @@ export default class GameObject {
     this.object2d = new PIXI.DisplayObject();
   }
 
+  createSprite() {
+    if (this.options.tiles) {
+      this.createTilingSprite();
+    } else {
+      this.object2d = new PIXI.Sprite(this.texture);
+      this.object2d.width = this.width;
+      this.object2d.height = this.height;
+    }
+  }
+
+  createTilingSprite() {
+    this.object2d = new PIXI.TilingSprite(
+      this.texture,
+      this.width,
+      this.height
+    );
+    let scale = this.height > this.width
+      ? this.width / this.texture.width
+      : this.height / this.texture.height;
+    scale = Math.ceil(scale * 10) / 10;
+    this.object2d.tileScale = { x: scale, y: scale };
+  }
+
+  createGraphicsObject(width, color, ...rest) {
+    this.object2d = new PIXI.Graphics();
+    this.object2d.lineStyle(width, color, ...rest);
+    this.object2d.drawRect(0, 0, this.width, this.height);
+  }
+
   beforeUpdate(delta) {}
   update(delta) {}
 

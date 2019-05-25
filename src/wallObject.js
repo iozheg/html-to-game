@@ -18,21 +18,9 @@ export default class WallObject extends GameObject {
 
   create2DObject() {
     if (this.texture) {
-      this.object2d = new PIXI.TilingSprite(
-        this.texture,
-        this.width,
-        this.height
-      );
-
-      let scale = this.height > this.width
-        ? this.width / this.texture.width
-        : this.height / this.texture.height;
-      scale = Math.ceil(scale * 10) / 10;
-      this.object2d.tileScale = { x: scale, y: scale };
+      this.createSprite();
     } else {
-      this.object2d = new PIXI.Graphics();
-      this.object2d.lineStyle(1, 0x00, 1);
-      this.object2d.drawRect(0, 0, this.width, this.height);
+      this.createGraphicsObject();
     }
     this.object2d.position = this.position;
   }

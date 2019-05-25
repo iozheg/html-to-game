@@ -25,13 +25,9 @@ export default class Player extends GameObject {
 
   create2DObject() {
     if (this.texture) {
-      this.object2d = new PIXI.Sprite(this.texture);
-      this.object2d.width = this.width;
-      this.object2d.height = this.height;
+      this.createSprite();
     } else {
-      this.object2d = new PIXI.Graphics();
-      this.object2d.lineStyle(3, 0x00, 1);
-      this.object2d.drawRect(0, 0, this.width, this.height);
+      this.createGraphicsObject(3, 0x00);
     }
     this.object2d.name = "player";
     this.object2d.position = this.position;
