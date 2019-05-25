@@ -19,6 +19,9 @@ export default class Player extends GameObject {
       this.options
     );
 
+    this.keyUpHandler = this.handleKeyUp.bind(this);
+    this.keyDownHandler = this.handleKeyDown.bind(this);
+
     this.create2DObject();
     this.keyboardController();
   }
@@ -34,11 +37,16 @@ export default class Player extends GameObject {
   }
 
   keyboardController() {
-    window.addEventListener("keyup", this.keyUpHandler.bind(this));
-    window.addEventListener("keydown", this.keyDownHandler.bind(this));
+    window.addEventListener("keyup", this.keyUpHandler);
+    window.addEventListener("keydown", this.keyDownHandler);
   }
 
-  keyDownHandler(event) {
+  removeController() {
+    window.removeEventListener("keyup", this.keyUpHandler);
+    window.removeEventListener("keydown", this.keyDownHandler);
+  }
+
+  handleKeyDown(event) {
     switch(event.key) {
       case "ArrowUp":
         if (GRAVITY_FORCE === 0) this.velocity.y = -MOVE_SPEED;
@@ -59,7 +67,7 @@ export default class Player extends GameObject {
     }
   }
 
-  keyUpHandler(event) {
+  handleKeyUp(event) {
     switch(event.key) {
       case "ArrowUp":
       case "ArrowDown":

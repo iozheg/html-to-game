@@ -13,8 +13,8 @@ export default class GameObject {
     this.options = options || {};
     this.nextPosition = { x: 0, y: 0 };
     this.velocity = { x: 0, y: 0 };
-    this.checkForCollisions = false;
     this.object2d;
+    this.isDestroyed = false;
   }
 
   create2DObject() {
@@ -55,9 +55,6 @@ export default class GameObject {
 
   attemptMove(x, y) {
     this.nextPosition = { x, y };
-    if (this.options.hasHitbox) {
-      this.checkForCollisions = true;
-    }
   }
 
   setPosition(x, y) {
@@ -87,6 +84,7 @@ export default class GameObject {
   onTrigger(other) {}
 
   destroy() {
+    this.isDestroyed = true;
     this.object2d.destroy(true);
     this.engine.removeFromScene(this);
     if (this.sourceHTMLElement) {

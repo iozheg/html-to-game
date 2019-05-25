@@ -1,5 +1,6 @@
 import * as PIXI from "pixi.js";
 import GameObject from "./gameObject";
+import Player from "./playerController";
 
 export default class GameEngine {
   /**
@@ -79,20 +80,33 @@ export default class GameEngine {
     return new PIXI.Texture(resource);
   }
 
+  /**
+   * Detects collision between player and different objects that has
+   * hitbox.
+   *
+   * @memberof GameEngine
+   */
   detectCollisions() {
-    const sources = this.gameObjects.filter(go => go.checkForCollisions);
+    const sources = this.gameObjects.filter(go => go instanceof Player);
     const targets = this.gameObjects.filter(go => go.options.hasHitbox);
 
     for (const source of sources) {
       for (const target of targets) {
-        /* Skip source itself. */
-        if (source.uuid === target.uuid) continue;
+        /* Skip source itself and if source or target is destroyed. */
+        if (source.uuid === target.uuid
+          || source.isDestroyed
+          || target.isDestroyed
+        ) continue;
         this.checkCollision(source, target);
       }
     }
   }
 
   /**
+   * Checks collision between two objects.
+   * If target is trigger than just check intersection and call onTrigger.
+   * Else detect axis of collision and call onCollision.
+   *
    * @param {GameObject} source
    * @param {GameObject} target
    * @returns {import("./typedef").Collision}
@@ -113,8 +127,6 @@ export default class GameEngine {
         target.onCollision({ other: source, axis: collision });
       }
     }
-
-    if (collision) source.checkForCollisions = false;
   }
 
   /**
