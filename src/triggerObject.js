@@ -8,8 +8,10 @@ export default class TriggerObject extends GameObject {
     this.texture = texture;
     this.position = { x: 100, y: 100 };
 
-    this.options.hasHitbox = true;
-    this.options.isTrigger = true;
+    this.options = Object.assign(
+      { hasHitbox: true, isTrigger: true },
+      this.options
+    );
 
     this.create2DObject();
   }

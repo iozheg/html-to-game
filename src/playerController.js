@@ -14,7 +14,10 @@ export default class Player extends GameObject {
     this.velocity.y = GRAVITY_FORCE;
     this.inJump = true;
 
-    this.options.hasHitbox = true;
+    this.options = Object.assign(
+      { hasHitbox: true },
+      this.options
+    );
 
     this.create2DObject();
     this.keyboardController();

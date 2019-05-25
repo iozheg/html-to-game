@@ -8,7 +8,10 @@ export default class WallObject extends GameObject {
     this.texture = texture;
     this.position = { x: 100, y: 100 };
 
-    this.options.hasHitbox = true;
+    this.options = Object.assign(
+      { hasHitbox: true, tiles: true },
+      this.options
+    );
 
     this.create2DObject();
   }
