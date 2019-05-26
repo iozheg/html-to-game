@@ -37,6 +37,7 @@ export default class GameEngine {
       x: this.app.renderer.width / 2,
       y: this.app.renderer.height / 2,
     };
+    this.camera.setLimits(this.app.renderer);
   }
 
   /**
