@@ -7,6 +7,7 @@ import GameEngine from "./gameEngine";
 import Player from "./playerController";
 import WallObject from "./wallObject";
 import TriggerObject from "./triggerObject";
+import Camera from "./camera";
 
 window.pixiApp;
 function getData(div, dataName) {
@@ -55,6 +56,7 @@ function createPlayer() {
   );
   player.setPosition(playerSize.x, playerSize.y);
   window.pixiApp.addToScene(player);
+  window.camera.setTarget(player);
 }
 
 function initScene() {
@@ -90,8 +92,12 @@ function initScene() {
 function startPixi() {
   const container = document.getElementById("pixi-container");
   const dimentions = container.getBoundingClientRect();
+  const scene = document.getElementById("dom-container");
+  const sceneDimentions = scene.getBoundingClientRect();
 
-  window.pixiApp = new GameEngine(container, dimentions);
+  window.camera = new Camera(sceneDimentions);
+
+  window.pixiApp = new GameEngine(container, dimentions, window.camera);
 
   const divsWithTextures = getAllElements("[data-texture-name]");
   const textures = new Set();

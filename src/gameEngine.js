@@ -1,20 +1,24 @@
 import * as PIXI from "pixi.js";
 import GameObject from "./gameObject";
 import Player from "./playerController";
+import Camera from "./camera";
 
 export default class GameEngine {
   /**
    *Creates an instance of GameEngine.
    * @param {HTMLElement} parentDOMElement
    * @param {{width: number, height: number}} sceneSize
+   * @param {Camera} camera
    * @memberof GameEngine
    */
-  constructor(parentDOMElement, sceneSize) {
+  constructor(parentDOMElement, sceneSize, camera) {
     this.app = undefined;
     /** @type {GameObject[]} */
     this.gameObjects = [];
     this.gameObjectsContainer = new PIXI.Container();
     this.resources = [];
+
+    this.camera = camera;
 
     this.app = new PIXI.Application({
       width: sceneSize.width,
@@ -29,6 +33,10 @@ export default class GameEngine {
 
     this.app.stage.addChild(this.gameObjectsContainer);
     this.app.ticker.add(delta => this.update(delta));
+    this.app.stage.position = {
+      x: this.app.renderer.width / 2,
+      y: this.app.renderer.height / 2,
+    };
   }
 
   /**
@@ -58,6 +66,8 @@ export default class GameEngine {
     this.gameObjects.forEach(go => go.beforeUpdate(delta));
     this.detectCollisions();
     this.gameObjects.forEach(go => go.update(delta));
+
+    this.camera.setCameraPosition(this.app.stage);
   }
 
   loadTextures(textures, callback) {
