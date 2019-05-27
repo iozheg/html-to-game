@@ -22,7 +22,7 @@ export default class GameEngine {
 
     this.app = new PIXI.Application({
       width: sceneSize.width,
-      height: sceneSize.height-3,
+      height: sceneSize.height,
       autoResize: true,
       antialias: true,
       forceFXAA: true,

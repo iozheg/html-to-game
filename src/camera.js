@@ -4,12 +4,15 @@ export default class Camera {
   constructor(sceneSize, target) {
     this.target = target;
     this.sceneSize = sceneSize;
+    /** Limits for camera moving. */
     this.cameraLimits = {
       top: CAMERA_MAX_OFFSET,
       right: sceneSize.width - CAMERA_MAX_OFFSET,
       bottom: sceneSize.height - CAMERA_MAX_OFFSET,
       left: CAMERA_MAX_OFFSET,
     };
+
+    this.constantPosition = {};
   }
 
   setCameraPosition(stage) {
@@ -18,11 +21,11 @@ export default class Camera {
       basePosition = this.target.position;
     }
 
-    const x = Math.min(
+    const x = this.constantPosition.x || Math.min(
       Math.max(basePosition.x, this.cameraLimits.left),
       this.cameraLimits.right
     );
-    const y = Math.min(
+    const y = this.constantPosition.y || Math.min(
       Math.max(basePosition.y, this.cameraLimits.top),
       this.cameraLimits.bottom
     );
@@ -42,5 +45,13 @@ export default class Camera {
       bottom: this.sceneSize.height - renderer.height / 2,
       left: renderer.width / 2,
     };
+
+    /* Fix axis if scene less than viewport. */
+    if (this.sceneSize.width <= renderer.width ) {
+      this.constantPosition.x = this.sceneSize.width / 2;
+    }
+    if (this.sceneSize.height <= renderer.height ) {
+      this.constantPosition.y = this.sceneSize.height / 2;
+    }
   }
 }
