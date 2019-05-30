@@ -1,0 +1,34 @@
+:root {
+  --start-delay: 1s;
+}
+
+@keyframes rotate-by-z {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0);
+  }
+}
+.rotate-z {
+  animation: rotate-by-z 0.5s linear var(--start-delay) infinite alternate;
+  transform-origin: center;
+}
+
+
+@keyframes lr-1500 {
+  from { margin-left: 0% }
+  to { margin-left: 1500% }
+}
+.move-left-right-repeat {
+  animation: lr-1500 0.7s linear var(--start-delay) infinite alternate;
+}
+
+
+@keyframes up-down-400 {
+  from { margin-top: 0% }
+  to { margin-top: 400% }
+}
+.move-up-down-repeat {
+  animation: up-down-400 0.5s linear var(--start-delay) infinite alternate;
+}

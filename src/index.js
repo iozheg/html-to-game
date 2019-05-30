@@ -1,13 +1,23 @@
 
 import "./style.css";
+import "./walls.css";
+import "./animations.css";
+import "./images/background.png";
+import "./images/bg-middle.png";
 import "./images/tileset.png";
 import "./images/props.png";
 import "./images/vue.png";
+import "./images/css.png";
+import "./images/html.png";
+import "./images/javascript.png";
+import "./images/webpack.png";
+import "./images/python.png";
 import GameEngine from "./gameEngine";
 import Player from "./playerController";
 import WallObject from "./wallObject";
 import TriggerObject from "./triggerObject";
 import Camera from "./camera";
+import DecorationObject from "./decorationObject";
 
 window.pixiApp;
 function getData(div, dataName) {
@@ -36,6 +46,7 @@ function getOptions(div) {
 
 function setDivTitle(div) {
   div.title = div.id + " " + Array(...div.classList).join(" ");
+  div.classList.add("object");
 }
 
 function getAllElements(selector) {
@@ -61,6 +72,19 @@ function createPlayer() {
 
 function initScene() {
   createPlayer();
+
+  const decorations = getAllElements("[data-scene-decoration]");
+  decorations.forEach(div => {
+    setDivTitle(div);
+    const size = div.getBoundingClientRect();
+    const texture = getTextureData(div);
+    const options = getOptions(div);
+    const wall = new DecorationObject(
+      size.width, size.height, pixiApp.getTexture(texture), div, options
+    );
+    wall.setPosition(size.x, size.y);
+    window.pixiApp.addToScene(wall);
+  });
 
   const walls = getAllElements("[data-scene-object]");
   walls.forEach(div => {

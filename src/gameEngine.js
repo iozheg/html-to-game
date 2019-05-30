@@ -16,6 +16,7 @@ export default class GameEngine {
     /** @type {GameObject[]} */
     this.gameObjects = [];
     this.gameObjectsContainer = new PIXI.Container();
+    this.gameObjectsContainer.sortableChildren = true;
     this.resources = [];
 
     this.camera = camera;
@@ -26,7 +27,7 @@ export default class GameEngine {
       autoResize: true,
       antialias: true,
       forceFXAA: true,
-      backgroundColor: 0x693f55,
+      transparent: true
     });
     parentDOMElement.appendChild(this.app.view);
     console.log(this.app);
