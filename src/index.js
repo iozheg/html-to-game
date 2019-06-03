@@ -2,6 +2,7 @@
 import "./style.css";
 import "./walls.css";
 import "./animations.css";
+import "./images/github.png";
 import "./images/background.png";
 import "./images/bg-middle.png";
 import "./images/tileset.png";

@@ -33,19 +33,80 @@ html, body {
 #dom-container {
   position: absolute;
   height: 100%;
-  z-index: -1;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .scene-field {
   height: 100%;
   display: grid;
-  margin-left: auto;
-  margin-right: auto;
   --width-cells: 60;
   grid-template-columns: repeat(var(--width-cells), calc(100vh/40));
-  /* grid-auto-columns: calc(100vh/40); */
   grid-template-rows: repeat(40, 1fr);
-  /* grid-gap: 1px; */
+}
+
+#info-panel {
+  grid-area: 15 / 2 / 28 / 35;
+  padding: 5px;
+  color: whitesmoke;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+#info-panel__header {
+  font-size: 24px;
+  align-self: center;
+  margin-top: 25px;
+}
+#info-panel__sub-header {
+  font-size: 16px;
+  width: 100%;
+  text-align: center;
+}
+#info-panel__bottom {
+  margin-top: 50px;
+  justify-self: end;
+  display: flex;
+}
+#info-panel__help-block {
+  width: 40%;
+}
+#info-panel__links-block {
+  width: 60%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+.link-button {
+  position: relative;
+  height: 30px;
+  background-color: transparent;
+  border: none;
+  padding: 5px;
+  cursor: pointer;
+  color: white;
+  font-size: 0.9em;
+  text-decoration: none;
+  filter: contrast(0.7);
+}
+.link-button:hover {
+  filter: contrast(1);
+}
+.link-button:active {
+  background-color: lightgray;
+}
+.link-button:visited {
+  color: white;
+}
+.link-button-with-icon {
+  padding-right: 30px;
+}
+.link-button img {
+  position: absolute;
+  height: 60%;
+  top: 5px;
+  right: 5px;
 }
 
 #player {
