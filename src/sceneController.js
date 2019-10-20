@@ -26,13 +26,18 @@ export default class SceneController {
     const sceneDims = sceneContainer.getBoundingClientRect();
     const canvasDims = canvasContainer.getBoundingClientRect();
 
+    this.xRatio = sceneDims.width / 1000;
+    this.yRatio = sceneDims.height / 1000;
+
     this.sceneContainer = sceneContainer;
     this.canvasContainer = canvasContainer;
     this.camera = new Camera(sceneDims);
     this.gameEngine = new GameEngine(
-      this.canvasContainer, canvasDims, this.camera
+      this.canvasContainer,
+      canvasDims,
+      this.camera
     );
-    
+
     this.loadTextures();
   }
 
@@ -42,11 +47,8 @@ export default class SceneController {
     divsWithTextures.forEach(div => {
       textures.add(this.getTextureData(div).name);
     });
-  
-    this.gameEngine.loadTextures(
-      Array(...textures),
-      this.initScene.bind(this)
-    );
+
+    this.gameEngine.loadTextures(Array(...textures), this.initScene.bind(this));
   }
 
   initScene() {
@@ -65,7 +67,8 @@ export default class SceneController {
       playerSize.height,
       undefined,
       playerDiv,
-      playerOptions
+      playerOptions,
+      { x: this.xRatio, y: this.yRatio }
     );
     player.setPosition(playerSize.x, playerSize.y);
     this.gameEngine.addToScene(player);
@@ -99,14 +102,14 @@ export default class SceneController {
   getData(div, dataName) {
     return div.dataset[dataName];
   }
-  
+
   getTextureData(div) {
     return {
       name: this.getData(div, TEXTURE_NAME),
       frame: this.getData(div, TEXTURE_FRAME)
     };
   }
-  
+
   getOptions(div) {
     const optionsStr = this.getData(div, OPTIONS_ATTR) || "{}";
     try {

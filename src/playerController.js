@@ -2,22 +2,24 @@ import * as PIXI from "pixi.js";
 import GameObject from "./gameObject";
 import { log } from "./utils";
 
-const MOVE_SPEED = 5;
-const JUMP_FORCE = 6;
-const GRAVITY_FORCE = 0.2;
+const MOVE_SPEED = 7;
+const JUMP_FORCE = 13;
+const GRAVITY_FORCE = 0.7;
 
 export default class Player extends GameObject {
-  constructor(width, height, texture, sourceHTMLElement, options) {
+  constructor(width, height, texture, sourceHTMLElement, options, sceneRatio) {
     super(width, width, sourceHTMLElement, options);
 
+    // Use y ratio because scene height defines scene size.
+    this.gravityForce = GRAVITY_FORCE * sceneRatio.y;
+    this.moveSpeed = MOVE_SPEED * sceneRatio.y;
+    this.jumpForce = JUMP_FORCE * sceneRatio.y;
+
     this.texture = texture;
-    this.velocity.y = GRAVITY_FORCE;
+    this.velocity.y = this.gravityForce;
     this.inJump = true;
 
-    this.options = Object.assign(
-      { hasHitbox: true },
-      this.options
-    );
+    this.options = Object.assign({ hasHitbox: true }, this.options);
 
     this.keyUpHandler = this.handleKeyUp.bind(this);
     this.keyDownHandler = this.handleKeyDown.bind(this);
@@ -47,31 +49,31 @@ export default class Player extends GameObject {
   }
 
   handleKeyDown(event) {
-    switch(event.key) {
+    switch (event.key) {
       case "ArrowUp":
-        if (GRAVITY_FORCE === 0) this.velocity.y = -MOVE_SPEED;
+        if (GRAVITY_FORCE === 0) this.velocity.y = -this.moveSpeed;
         else if (!this.inJump) {
-          this.velocity.y = -JUMP_FORCE;
+          this.velocity.y = -this.jumpForce;
           this.inJump = true;
         }
         break;
       case "ArrowDown":
-        if (GRAVITY_FORCE === 0) this.velocity.y = MOVE_SPEED;
+        if (GRAVITY_FORCE === 0) this.velocity.y = this.moveSpeed;
         break;
       case "ArrowLeft":
-        this.velocity.x = -MOVE_SPEED;
+        this.velocity.x = -this.moveSpeed;
         break;
       case "ArrowRight":
-        this.velocity.x = MOVE_SPEED;
+        this.velocity.x = this.moveSpeed;
         break;
     }
   }
 
   handleKeyUp(event) {
-    switch(event.key) {
+    switch (event.key) {
       case "ArrowUp":
       case "ArrowDown":
-        if (GRAVITY_FORCE === 0) this.velocity.y = GRAVITY_FORCE;
+        if (GRAVITY_FORCE === 0) this.velocity.y = this.gravityForce;
         break;
       case "ArrowLeft":
         if (this.velocity.x < 0) this.velocity.x = 0;
@@ -88,7 +90,7 @@ export default class Player extends GameObject {
    * @param {import("./typedef").Collision}
    * @memberof Player
    */
-  onCollision({ other, axis}) {
+  onCollision({ other, axis }) {
     /* Find out side of collision for each axis and set object near. */
     if (axis.x !== 0) {
       if (this.position.x > other.position.x + other.width) {
@@ -130,17 +132,17 @@ export default class Player extends GameObject {
   }
 
   beforeUpdate(delta) {
-    if (this.velocity.x !== 0 || this.velocity.y !==0) {
+    if (this.velocity.x !== 0 || this.velocity.y !== 0) {
       this.attemptMove(
         this.position.x + this.velocity.x,
         this.position.y + this.velocity.y
       );
-      this.velocity.y += GRAVITY_FORCE;
+      this.velocity.y += this.gravityForce;
     }
   }
 
   update(delta) {
-    if (this.velocity.x !== 0 || this.velocity.y !==0) {
+    if (this.velocity.x !== 0 || this.velocity.y !== 0) {
       this.setPosition(this.nextPosition.x, this.nextPosition.y);
     }
   }
