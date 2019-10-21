@@ -1,12 +1,13 @@
 import * as PIXI from "pixi.js";
 import { uuid } from "../utils";
+import eventSystem from "../eventSystem";
 
 export default class GameObject {
   constructor(width = 10, height = 10, sourceHTMLElement, options) {
     this.sourceHTMLElement = sourceHTMLElement;
-    this.engine;
     /** @type {String} */
     this.uuid = uuid();
+    this.name = "";
     this.width = width;
     this.height = height;
     this.position = { x: 0, y: 0 };
@@ -85,9 +86,10 @@ export default class GameObject {
   onTrigger(other) {}
 
   destroy() {
+    eventSystem.send("object.destroy", this);
     this.isDestroyed = true;
     this.object2d.destroy(true);
-    this.engine.removeFromScene(this);
+    // this.engine.removeFromScene(this);
     if (this.sourceHTMLElement) {
       this.sourceHTMLElement.parentNode.removeChild(this.sourceHTMLElement);
     }

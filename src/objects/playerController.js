@@ -8,6 +8,7 @@ const GRAVITY_FORCE = 0.7;
 export default class Player extends GameObject {
   constructor(width, height, texture, sourceHTMLElement, options, sceneRatio) {
     super(width, width, sourceHTMLElement, options);
+    this.name = "player";
 
     // Use y ratio because scene height defines scene size.
     this.gravityForce = GRAVITY_FORCE * sceneRatio.y;
@@ -33,7 +34,6 @@ export default class Player extends GameObject {
     } else {
       this.createGraphicsObject(3, 0x00);
     }
-    this.object2d.name = "player";
     this.object2d.position = this.position;
   }
 

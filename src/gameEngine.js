@@ -2,6 +2,7 @@ import * as PIXI from "pixi.js";
 import GameObject from "./objects/gameObject";
 import Player from "./objects/playerController";
 import Camera from "./camera";
+import eventSystem from "./eventSystem";
 
 export default class GameEngine {
   /**
@@ -39,6 +40,10 @@ export default class GameEngine {
       y: this.app.renderer.height / 2
     };
     this.camera.setLimits(this.app.renderer);
+
+    eventSystem
+      .on("object.destroy")
+      .subscribe(event => this.removeFromScene(event.data));
   }
 
   /**
@@ -47,7 +52,6 @@ export default class GameEngine {
    */
   addToScene(gameObject) {
     this.gameObjects.push(gameObject);
-    gameObject.engine = this;
     this.gameObjectsContainer.addChild(gameObject.object2d);
   }
 
