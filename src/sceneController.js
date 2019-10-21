@@ -1,9 +1,9 @@
 import Camera from "./camera";
 import GameEngine from "./gameEngine";
-import WallObject from "./wallObject";
-import TriggerObject from "./triggerObject";
-import DecorationObject from "./decorationObject";
-import Player from "./playerController";
+import WallObject from "./objects/wallObject";
+import TriggerObject from "./objects/triggerObject";
+import DecorationObject from "./objects/decorationObject";
+import Player from "./objects/playerController";
 
 const TEXTURE_ATTR = "[data-texture-name]";
 const TEXTURE_NAME = "textureName";

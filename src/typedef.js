@@ -1,4 +1,4 @@
-import GameObject from "./gameObject";
+import GameObject from "./objects/gameObject";
 
 /**
  * @typedef {Object} Collision
@@ -6,10 +6,10 @@ import GameObject from "./gameObject";
  * @property {{x: number, y: number}} axis
  */
 
- /**
-  * @typedef {Object} Rectangle
-  * @property {Number} left
-  * @property {Number} top
-  * @property {Number} right
-  * @property {Number} bottom
-  */
+/**
+ * @typedef {Object} Rectangle
+ * @property {Number} left
+ * @property {Number} top
+ * @property {Number} right
+ * @property {Number} bottom
+ */

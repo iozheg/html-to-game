@@ -2,7 +2,8 @@
   box-sizing: border-box;
   margin: 0;
 }
-html, body {
+html,
+body {
   height: 100%;
   width: 100%;
   overflow: hidden;
@@ -12,7 +13,7 @@ html, body {
   position: absolute;
   width: 100%;
   height: 100%;
-  background: url(images/background.png) no-repeat;
+  background: url(../images/background.png) no-repeat;
   background-size: cover;
   z-index: -1;
 }
@@ -20,7 +21,7 @@ html, body {
   width: 100%;
   height: 100%;
   margin-top: 15%;
-  background: url(images/bg-middle.png) repeat-x;
+  background: url(../images/bg-middle.png) repeat-x;
   background-size: auto 75%;
 }
 
@@ -42,7 +43,7 @@ html, body {
   height: 100%;
   display: grid;
   --width-cells: 60;
-  grid-template-columns: repeat(var(--width-cells), calc(100vh/40));
+  grid-template-columns: repeat(var(--width-cells), calc(100vh / 40));
   grid-template-rows: repeat(40, 1fr);
 }
 
@@ -115,13 +116,11 @@ html, body {
   height: 90%;
 }
 
-
 /* Objects. */
 
 .object {
   cursor: pointer;
 }
-
 
 .hazard {
   align-self: flex-end;
@@ -139,7 +138,6 @@ html, body {
 #hazard-4 {
   grid-area: 34 / 50 / 35 / 53;
 }
-
 
 #container-moving-block {
   grid-area: 13 / 7 / 14 / 8;

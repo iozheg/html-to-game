@@ -7,10 +7,7 @@ export default class DecorationObject extends GameObject {
     this.texture = texture;
     this.position = { x: 100, y: 100 };
 
-    this.options = Object.assign(
-      { tiles: true },
-      this.options
-    );
+    this.options = Object.assign({ tiles: true }, this.options);
 
     this.create2DObject();
   }

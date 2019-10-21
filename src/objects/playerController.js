@@ -1,6 +1,5 @@
-import * as PIXI from "pixi.js";
 import GameObject from "./gameObject";
-import { log } from "./utils";
+import { log } from "../utils";
 
 const MOVE_SPEED = 7;
 const JUMP_FORCE = 13;
@@ -87,7 +86,7 @@ export default class Player extends GameObject {
   /**
    * Sets object's position near second object of collision.
    *
-   * @param {import("./typedef").Collision}
+   * @param {import("../typedef").Collision}
    * @memberof Player
    */
   onCollision({ other, axis }) {

@@ -1,6 +1,6 @@
 import * as PIXI from "pixi.js";
-import GameObject from "./gameObject";
-import Player from "./playerController";
+import GameObject from "./objects/gameObject";
+import Player from "./objects/playerController";
 import Camera from "./camera";
 
 export default class GameEngine {
@@ -36,7 +36,7 @@ export default class GameEngine {
     this.app.ticker.add(delta => this.update(delta));
     this.app.stage.position = {
       x: this.app.renderer.width / 2,
-      y: this.app.renderer.height / 2,
+      y: this.app.renderer.height / 2
     };
     this.camera.setLimits(this.app.renderer);
   }
@@ -56,8 +56,9 @@ export default class GameEngine {
    * @memberof GameEngine
    */
   removeFromScene(gameObject) {
-    const goIndex = this.gameObjects
-      .findIndex(go => go.uuid === gameObject.uuid);
+    const goIndex = this.gameObjects.findIndex(
+      go => go.uuid === gameObject.uuid
+    );
     if (goIndex) {
       this.gameObjects.splice(goIndex, 1);
       this.gameObjectsContainer.removeChild(gameObject.object2d);
@@ -73,12 +74,10 @@ export default class GameEngine {
   }
 
   loadTextures(textures, callback) {
-    PIXI.Loader.shared
-      .add(textures)
-      .load((loader, resources) => {
-        this.resources = resources;
-        callback();
-      });
+    PIXI.Loader.shared.add(textures).load((loader, resources) => {
+      this.resources = resources;
+      callback();
+    });
   }
 
   getTexture(texture) {
@@ -105,10 +104,12 @@ export default class GameEngine {
     for (const source of sources) {
       for (const target of targets) {
         /* Skip source itself and if source or target is destroyed. */
-        if (source.uuid === target.uuid
-          || source.isDestroyed
-          || target.isDestroyed
-        ) continue;
+        if (
+          source.uuid === target.uuid ||
+          source.isDestroyed ||
+          target.isDestroyed
+        )
+          continue;
         this.checkCollision(source, target);
       }
     }
@@ -153,13 +154,13 @@ export default class GameEngine {
       top: source.nextPosition.y,
       right: source.nextPosition.x + source.width,
       bottom: source.nextPosition.y + source.height
-    }
+    };
     const targetRect = {
       left: target.position.x,
       top: target.position.y,
       right: target.position.x + target.width,
       bottom: target.position.y + target.height
-    }
+    };
 
     if (this.checkRectIntersection(sourceRect, targetRect)) {
       return true;
@@ -180,21 +181,21 @@ export default class GameEngine {
       top: source.position.y,
       right: source.nextPosition.x + source.width,
       bottom: source.position.y + source.height
-    }
+    };
 
     const futureObjectY = {
       left: source.position.x,
       top: source.nextPosition.y,
       right: source.position.x + source.width,
       bottom: source.nextPosition.y + source.height
-    }
+    };
 
     const targetRect = {
       left: target.position.x,
       top: target.position.y,
       right: target.position.x + target.width,
       bottom: target.position.y + target.height
-    }
+    };
 
     if (this.checkRectIntersection(futureObjectX, targetRect)) {
       return { x: 1, y: 0 };
@@ -221,7 +222,7 @@ export default class GameEngine {
     const width = right - left;
     const height = bottom - top;
 
-    if (!((width < 0) || (height < 0))) return true;
+    if (!(width < 0 || height < 0)) return true;
     return false;
   }
 }

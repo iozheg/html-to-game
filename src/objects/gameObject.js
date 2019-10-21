@@ -1,5 +1,5 @@
 import * as PIXI from "pixi.js";
-import { uuid } from "./utils";
+import { uuid } from "../utils";
 
 export default class GameObject {
   constructor(width = 10, height = 10, sourceHTMLElement, options) {
@@ -37,9 +37,10 @@ export default class GameObject {
       this.width,
       this.height
     );
-    let scale = this.height > this.width
-      ? this.width / this.texture.width
-      : this.height / this.texture.height;
+    let scale =
+      this.height > this.width
+        ? this.width / this.texture.width
+        : this.height / this.texture.height;
     scale = Math.ceil(scale * 10) / 10;
     this.object2d.tileScale = { x: scale, y: scale };
   }
@@ -72,8 +73,8 @@ export default class GameObject {
     this.object2d.height = this.height;
   }
 
-  /** 
-   * @param {import("./typedef").Collision} collision
+  /**
+   * @param {import("../typedef").Collision} collision
    */
   onCollision(collision) {}
 

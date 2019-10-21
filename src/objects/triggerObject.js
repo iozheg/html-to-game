@@ -1,4 +1,3 @@
-import * as PIXI from "pixi.js";
 import GameObject from "./gameObject";
 
 export default class TriggerObject extends GameObject {
