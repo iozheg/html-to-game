@@ -39,6 +39,30 @@ body {
   justify-content: center;
 }
 
+.game-over-popup {
+  position: absolute;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+
+  width: 350px;
+  margin-top: 20%;
+  padding: 10px;
+  box-shadow: 0 0 2px black;
+  color: whitesmoke;
+  background: #322c43;
+}
+.game-over-popup__popup-button {
+  height: 36px;
+  width: 128px;
+  margin: 50px 0 10px 0;
+  /* margin: 0 auto; */
+}
+.game-over-popup__popup-button button {
+  height: 100%;
+  width: 100%;
+}
+
 .scene-field {
   height: 100%;
   display: grid;

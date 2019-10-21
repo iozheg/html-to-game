@@ -18,7 +18,6 @@ export default class GameEngine {
     this.gameObjects = [];
     this.gameObjectsContainer = new PIXI.Container();
     this.gameObjectsContainer.sortableChildren = true;
-    this.resources = [];
 
     this.camera = camera;
 
@@ -75,24 +74,6 @@ export default class GameEngine {
     this.gameObjects.forEach(go => go.update(delta));
 
     this.camera.setCameraPosition(this.app.stage);
-  }
-
-  loadTextures(textures, callback) {
-    PIXI.Loader.shared.add(textures).load((loader, resources) => {
-      this.resources = resources;
-      callback();
-    });
-  }
-
-  getTexture(texture) {
-    const resource = this.resources[texture.name].texture.baseTexture;
-    if (texture.frame) {
-      const frame = new PIXI.Rectangle(
-        ...texture.frame.split(",").map(v => Number(v))
-      );
-      return new PIXI.Texture(resource, frame);
-    }
-    return new PIXI.Texture(resource);
   }
 
   /**
@@ -228,5 +209,11 @@ export default class GameEngine {
 
     if (!(width < 0 || height < 0)) return true;
     return false;
+  }
+
+  destroy() {
+    this.app.destroy(true, true);
+    this.gameObjects = [];
+    this.camera = undefined;
   }
 }

@@ -1,9 +1,11 @@
+import * as PIXI from "pixi.js";
 import Camera from "./camera";
 import GameEngine from "./gameEngine";
 import WallObject from "./objects/wallObject";
 import TriggerObject from "./objects/triggerObject";
 import DecorationObject from "./objects/decorationObject";
 import Player from "./objects/playerController";
+import eventSystem from "./eventSystem";
 
 const TEXTURE_ATTR = "[data-texture-name]";
 const TEXTURE_NAME = "textureName";
@@ -24,31 +26,54 @@ export default class SceneController {
    */
   constructor(sceneContainer, canvasContainer, options = {}) {
     const sceneDims = sceneContainer.getBoundingClientRect();
-    const canvasDims = canvasContainer.getBoundingClientRect();
 
     this.xRatio = sceneDims.width / 1000;
     this.yRatio = sceneDims.height / 1000;
 
     this.sceneContainer = sceneContainer;
     this.canvasContainer = canvasContainer;
-    this.camera = new Camera(sceneDims);
-    this.gameEngine = new GameEngine(
-      this.canvasContainer,
-      canvasDims,
-      this.camera
-    );
+    this.resources = [];
 
-    this.loadTextures();
+    this.setupGameOverPopup();
+
+    eventSystem.on("object.destroy").subscribe(event => {
+      if (event.data.name === "player") {
+        console.log("player died");
+        this.showGameOverPopup();
+      }
+    });
+
+    this.loadTextures(this.initGame.bind(this));
   }
 
-  loadTextures() {
+  initGame() {
+    this.camera = new Camera(this.sceneContainer.getBoundingClientRect());
+    this.gameEngine = new GameEngine(
+      this.canvasContainer,
+      this.canvasContainer.getBoundingClientRect(),
+      this.camera,
+      this.resources
+    );
+    this.initScene();
+  }
+
+  restartGame() {
+    this.gameEngine.destroy();
+    this.initGame();
+  }
+
+  loadTextures(initCallback) {
     const divsWithTextures = this.getElementsByDataAttr(TEXTURE_ATTR);
     const textures = new Set();
     divsWithTextures.forEach(div => {
       textures.add(this.getTextureData(div).name);
     });
+    PIXI.Loader.shared.add(Array(...textures)).load((loader, resources) => {
+      this.resources = resources;
+      initCallback();
+    });
 
-    this.gameEngine.loadTextures(Array(...textures), this.initScene.bind(this));
+    // this.gameEngine.loadTextures(Array(...textures), this.initScene.bind(this));
   }
 
   initScene() {
@@ -84,7 +109,7 @@ export default class SceneController {
       const object = new constructor(
         size.width,
         size.height,
-        this.gameEngine.getTexture(texture),
+        this.getTexture(texture),
         div,
         options
       );
@@ -110,6 +135,17 @@ export default class SceneController {
     };
   }
 
+  getTexture(texture) {
+    const resource = this.resources[texture.name].texture.baseTexture;
+    if (texture.frame) {
+      const frame = new PIXI.Rectangle(
+        ...texture.frame.split(",").map(v => Number(v))
+      );
+      return new PIXI.Texture(resource, frame);
+    }
+    return new PIXI.Texture(resource);
+  }
+
   getOptions(div) {
     const optionsStr = this.getData(div, OPTIONS_ATTR) || "{}";
     try {
@@ -121,5 +157,22 @@ export default class SceneController {
       );
       return {};
     }
+  }
+
+  setupGameOverPopup() {
+    this.popup = document.querySelector(".game-over-popup");
+    this.popup
+      .querySelector("#try-again-button")
+      .addEventListener("click", () => {
+        this.restartGame();
+        this.popup.style.display = "none";
+      });
+    this.popup.querySelector("#close-popup").addEventListener("click", () => {
+      this.gameEngine.app.stop();
+      this.popup.style.display = "none";
+    });
+  }
+  showGameOverPopup() {
+    this.popup.style.display = "flex";
   }
 }

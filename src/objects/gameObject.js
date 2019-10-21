@@ -88,11 +88,7 @@ export default class GameObject {
   destroy() {
     eventSystem.send("object.destroy", this);
     this.isDestroyed = true;
-    this.object2d.destroy(true);
-    // this.engine.removeFromScene(this);
-    if (this.sourceHTMLElement) {
-      this.sourceHTMLElement.parentNode.removeChild(this.sourceHTMLElement);
-    }
+    this.object2d.destroy();
   }
   // contains(point) {
   //   const right = this.position.x + this.width;
