@@ -5,7 +5,6 @@ import WallObject from "./objects/wallObject";
 import TriggerObject from "./objects/triggerObject";
 import DecorationObject from "./objects/decorationObject";
 import Player from "./objects/playerController";
-import eventSystem from "./eventSystem";
 
 const TEXTURE_ATTR = "[data-texture-name]";
 const TEXTURE_NAME = "textureName";
@@ -34,15 +33,6 @@ export default class SceneController {
     this.canvasContainer = canvasContainer;
     this.resources = [];
 
-    this.setupGameOverPopup();
-
-    eventSystem.on("object.destroy").subscribe(event => {
-      if (event.data.name === "player") {
-        console.log("player died");
-        this.showGameOverPopup();
-      }
-    });
-
     this.loadTextures(this.initGame.bind(this));
   }
 
@@ -59,7 +49,14 @@ export default class SceneController {
 
   restartGame() {
     this.gameEngine.destroy();
+    this.gameEngine = undefined;
+    this.camera.destroy();
+    this.camera = undefined;
     this.initGame();
+  }
+
+  stopGame() {
+    this.gameEngine.app.stop();
   }
 
   loadTextures(initCallback) {
@@ -72,8 +69,6 @@ export default class SceneController {
       this.resources = resources;
       initCallback();
     });
-
-    // this.gameEngine.loadTextures(Array(...textures), this.initScene.bind(this));
   }
 
   initScene() {
@@ -158,22 +153,5 @@ export default class SceneController {
       );
       return {};
     }
-  }
-
-  setupGameOverPopup() {
-    this.popup = document.querySelector(".game-over-popup");
-    this.popup
-      .querySelector("#try-again-button")
-      .addEventListener("click", () => {
-        this.restartGame();
-        this.popup.style.display = "none";
-      });
-    this.popup.querySelector("#close-popup").addEventListener("click", () => {
-      this.gameEngine.app.stop();
-      this.popup.style.display = "none";
-    });
-  }
-  showGameOverPopup() {
-    this.popup.style.display = "flex";
   }
 }

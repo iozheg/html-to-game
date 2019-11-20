@@ -40,9 +40,11 @@ export default class GameEngine {
     };
     this.camera.setLimits(this.app.renderer);
 
-    eventSystem
-      .on("object.destroy")
-      .subscribe(event => this.removeFromScene(event.data));
+    this.subscriptions = [
+      eventSystem
+        .on("object.destroy")
+        .subscribe(event => this.removeFromScene(event.data))
+      ];
   }
 
   /**
@@ -65,6 +67,16 @@ export default class GameEngine {
     if (goIndex) {
       this.gameObjects.splice(goIndex, 1);
       this.gameObjectsContainer.removeChild(gameObject.object2d);
+    }
+
+    if (gameObject.options.collectable) {
+      const hasCollectable = this.gameObjects.some(
+        go => go.options.collectable
+      );
+
+      if (!hasCollectable) {
+        eventSystem.send('game.collectables', { amount: 0 });
+      }
     }
   }
 
@@ -212,6 +224,7 @@ export default class GameEngine {
   }
 
   destroy() {
+    this.subscriptions.forEach(sub => sub.unsubscribe());
     this.app.destroy(true, true);
     this.gameObjects = [];
     this.camera = undefined;

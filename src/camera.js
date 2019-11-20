@@ -54,4 +54,8 @@ export default class Camera {
       this.constantPosition.y = this.sceneSize.height / 2;
     }
   }
+
+  destroy() {
+    this.target = undefined;
+  }
 }

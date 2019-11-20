@@ -124,8 +124,6 @@ export default class Player extends GameObject {
     }
     if (other.options.isHazard) {
       log("Player died");
-      this.removeController();
-      this.velocity = { x: 0, y: 0 };
       this.destroy();
     }
   }
@@ -144,5 +142,11 @@ export default class Player extends GameObject {
     if (this.velocity.x !== 0 || this.velocity.y !== 0) {
       this.setPosition(this.nextPosition.x, this.nextPosition.y);
     }
+  }
+
+  destroy() {
+    this.removeController();
+    this.velocity = { x: 0, y: 0 };
+    super.destroy();
   }
 }
