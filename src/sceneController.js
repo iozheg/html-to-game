@@ -86,11 +86,12 @@ export default class SceneController {
   createPlayer() {
     const playerDiv = this.getElementsByDataAttr(PLAYER_ATTR)[0];
     const playerSize = playerDiv.getBoundingClientRect();
+    const playerTexture = this.getTextureData(playerDiv);
     const playerOptions = this.getOptions(playerDiv);
     const player = new Player(
       playerSize.width,
       playerSize.height,
-      undefined,
+      this.getTexture(playerTexture),
       playerDiv,
       playerOptions,
       { x: this.xRatio, y: this.yRatio }
