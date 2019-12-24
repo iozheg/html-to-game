@@ -26,6 +26,7 @@ To listen game event you can subscribe on internal events:
   ```DomToPixi.EventSystem.on(EVENT).subscribe(callback(event));```
 
 Available events:
+
 | event               | payload       | desc                                         |
 |---------------------|---------------|----------------------------------------------|
 | 'game.collectables' | { amount: 0 } | emitted when all Collectables were collected |
@@ -33,6 +34,7 @@ Available events:
 
 ### Configure game scene
 To configure game scene and objects you should add some data attributes to HTML elements.
+
 | data attribute     | value                                                                                                              | optional | desc                                                                                                                                                                                                                                                                                                                                                                                         |
 |--------------------|--------------------------------------------------------------------------------------------------------------------|----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | data-scene-object  | none                                                                                                               | false    | This attr is necessary for all game objects except player. Elements with this attr will be used for PIXI GameObjects.                                                                                                                                                                                                                                                                        |
