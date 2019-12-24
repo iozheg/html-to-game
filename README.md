@@ -13,16 +13,22 @@ Later...
 
 ### Initiaize
 1. In your project import default from index.js (e.g. as DomToPixi):
+
   ```import DomToPixi from '../node_modules/dom-to-pixi-engine/src/index';```
+
 2. Create scene controller:
+
   ```const sceneController = new DomToPixi.SceneController(scene, container);```
   where: 'scene' - HTML element that includes game scene objects, 'container' - HTML element where PIXI canvas will be placed.
-3. Now sceneController to restart or stop game:
+
+3. Now sceneController can be used to restart or stop game:
+
   ```sceneController.restartGame();```
   ```sceneController.stopGame();```
 
 ### Listening events
 To listen game event you can subscribe on internal events:
+
   ```DomToPixi.EventSystem.on(EVENT).subscribe(callback(event));```
 
 Available events:
